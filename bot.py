@@ -1,8 +1,10 @@
+import os
 import discord
 from discord.ext import commands
 
-TOKEN = ''# ここにbotのトークンを記入してください
-TARGET_USER_ID = 1155009122924761140  # ← この値は18桁以内にしてください
+# 環境変数からトークンと対象ユーザーIDを取得
+TOKEN = os.getenv("DISCORD_TOKEN")
+TARGET_USER_ID = int(os.getenv("TARGET_USER_ID"))
 
 # モールス変換辞書
 MORSE_DICT = {
@@ -18,16 +20,18 @@ MORSE_DICT = {
     ' ': '/', '.': '.-.-.-', '?': '..--..', '!': '-.-.--'
 }
 
+# モールス変換関数
 def to_morse(text):
     return ' '.join(MORSE_DICT.get(c.upper(), '?') for c in text).replace('.', '・')
 
+# BOTの初期化
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
 async def on_ready():
-    print(f'\u2705 Bot\u30ed\u30b0\u30a4\u30f3\u5b8c\u4e86: {bot.user.name}')
+    print(f'✅ Botログイン完了: {bot.user.name}')
 
 @bot.event
 async def on_message(message):
@@ -37,7 +41,7 @@ async def on_message(message):
     if message.author.id == TARGET_USER_ID:
         await message.delete()
         morse = to_morse(message.content)
-        await message.channel.send(f"\ud83d\udd07 `{message.author.display_name}` の発言:\n`{morse}`")
+        await message.channel.send(f"🔇 `{message.author.display_name}` の発言:\n`{morse}`")
     else:
         await bot.process_commands(message)
 
