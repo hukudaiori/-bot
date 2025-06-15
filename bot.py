@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-TOKEN = 'MTIyODIyNzgzMzE2ODUzMTUwNw.GDneww.w8Qnp_lV8_LJbzY-ZQQHTMS5CKLpzXYd8QvW4s'
+TOKEN = ''# ここにbotのトークンを記入してください
 TARGET_USER_ID = 1155009122924761140  # ← この値は18桁以内にしてください
 
 # モールス変換辞書
